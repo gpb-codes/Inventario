@@ -1,0 +1,7 @@
+models.py
+config.py
+app.py
+docker-compose.yml
+templates/
+index.html
+productos.html

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Contenedor principal -->
+<div
+    class="max-w-lg mx-auto bg-black/40 border border-yellow-500 backdrop-blur-md shadow-2xl rounded-2xl p-8 text-white">
+
+    <!-- Título -->
+    <h1 class="text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+        <img src="{{ url_for('static', filename='icons/square-pen.svg') }}" alt="Editar" class="w-7 h-7 filter invert">
+        Editar Producto
+    </h1>
+
+    <!-- Formulario -->
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+
+        <!-- Nombre -->
+        <div>
+            <label class="block text-sm font-semibold mb-1 flex items-center gap-2 text-gray-200">
+                <img src="{{ url_for('static', filename='icons/productos.svg') }}" alt="Nombre"
+                    class="w-4 h-4 filter invert">
+                Nombre del producto
+            </label>
+            <input type="text" name="nombre" value="{{ producto.nombre }}" class="w-full border border-yellow-500 bg-black/60 text-white rounded-lg px-4 py-2
+                    focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:outline-none" required>
+        </div>
+
+        <!-- Descripción -->
+        <div>
+            <label class="block text-sm font-semibold mb-1 flex items-center gap-2 text-gray-200">
+                <img src="{{ url_for('static', filename='icons/layers-plus.svg') }}" alt="Descripción"
+                    class="w-4 h-4 filter invert">
+                Descripción
+            </label>
+            <textarea name="descripcion" rows="3"
+                class="w-full border border-yellow-500 bg-black/60 text-white rounded-lg px-4 py-2
+                       focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:outline-none">{{ producto.descripcion }}</textarea>
+        </div>
+
+        <!-- Precio -->
+        <div>
+            <label class="block text-sm font-semibold mb-1 flex items-center gap-2 text-gray-200">
+                <img src="{{ url_for('static', filename='icons/circle-dollar-sign.svg') }}" alt="Precio"
+                    class="w-4 h-4 filter invert">
+                Precio
+            </label>
+            <input type="number" step="0.01" name="precio" value="{{ producto.precio }}" class="w-full border border-yellow-500 bg-black/60 text-white rounded-lg px-4 py-2
+                    focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:outline-none" required>
+        </div>
+
+        <!-- Stock -->
+        <div>
+            <label class="block text-sm font-semibold mb-1 flex items-center gap-2 text-gray-200">
+                <img src="{{ url_for('static', filename='icons/warehouse.svg') }}" alt="Stock"
+                    class="w-4 h-4 filter invert">
+                Stock
+            </label>
+            <input type="number" name="stock" value="{{ producto.stock }}" class="w-full border border-yellow-500 bg-black/60 text-white rounded-lg px-4 py-2
+                    focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:outline-none" required>
+        </div>
+
+        <!-- Imagen -->
+        <div>
+            <label class="block text-sm font-semibold mb-1 flex items-center gap-2 text-gray-200">
+                <img src="{{ url_for('static', filename='icons/circle-plus.svg') }}" alt="Imagen"
+                    class="w-4 h-4 filter invert">
+                Imagen del producto
+            </label>
+            <input type="file" name="imagen" class="w-full border border-yellow-500 bg-black/60 text-white rounded-lg px-4 py-2
+                    focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:outline-none">
+            <p class="text-xs text-gray-400 mt-1">Formatos recomendados: JPG, PNG · Máx. 2MB</p>
+        </div>
+
+        <!-- Botón -->
+        <button type="submit" class="w-full bg-purple-600/90 hover:bg-purple-700
+                   text-white font-semibold py-3 rounded-xl
+                   transition transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2">
+            <img src="{{ url_for('static', filename='icons/badge-check.svg') }}" alt="Guardar"
+                class="w-5 h-5 filter invert">
+            Guardar cambios
+        </button>
+
+    </form>
+</div>
+
+{% endblock %}

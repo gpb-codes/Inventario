@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Encabezado -->
+<div class="bg-purple-600/40 backdrop-blur-md rounded-xl shadow-md py-6 mb-10 flex items-center justify-center gap-3">
+  <img src="{{ url_for('static', filename='icons/productos.svg') }}" alt="Productos" class="h-8 w-8 filter invert">
+  <h1 class="text-4xl font-extrabold text-white text-center">
+    Productos
+  </h1>
+</div>
+
+<!-- Grid de productos -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  {% for producto in productos %}
+  <div class="bg-black/40 border border-yellow-500 p-4 rounded-2xl shadow-md hover:shadow-xl hover:scale-[1.02] transition transform flex flex-col text-white">
+
+    <!-- Imagen -->
+    {% if producto.imagen %}
+    <div class="h-48 flex items-center justify-center mb-4 bg-gray-800 rounded-xl p-2 overflow-hidden">
+      <img src="{{ producto.imagen }}" class="max-h-full max-w-full object-contain rounded">
+    </div>
+    {% else %}
+    <div class="h-48 flex items-center justify-center mb-4 bg-gray-700 text-gray-300 rounded-xl">
+      <img src="{{ url_for('static', filename='icons/package-search.svg') }}" alt="Sin imagen" class="h-8 w-8 mr-2 filter invert">
+      Sin imagen
+    </div>
+    {% endif %}
+
+    <!-- Nombre -->
+    <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">
+      <img src="{{ url_for('static', filename='icons/badge-check.svg') }}" alt="Nombre" class="h-5 w-5 filter invert">
+      {{ producto.nombre }}
+    </h2>
+
+    <!-- Descripción -->
+    <p class="flex-1 text-gray-200">{{ producto.descripcion }}</p>
+
+    <!-- Precio -->
+    <p class="font-bold mt-2 flex items-center gap-2 text-gray-200">
+      <img src="{{ url_for('static', filename='icons/dollar-sign.svg') }}" alt="Precio" class="h-5 w-5 filter invert">
+      Precio: {{ producto.precio|clp }}
+    </p>
+
+    <!-- Botón agregar al carrito -->
+    <form action="{{ url_for('productos.agregar_carrito', producto_id=producto.id) }}" method="POST" class="mt-4">
+      <button type="submit"
+              title="Agregar al carrito"
+              class="w-full flex items-center justify-center
+                     bg-purple-600/90 text-white p-3 rounded-xl
+                     shadow-md hover:bg-purple-700 hover:scale-105
+                     transform transition">
+        <img src="{{ url_for('static', filename='icons/cart (2).svg') }}"
+             alt="Agregar al carrito"
+             class="w-6 h-6 filter invert mr-2">
+        <span>Agregar</span>
+      </button>
+    </form>
+
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

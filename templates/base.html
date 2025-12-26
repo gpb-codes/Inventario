@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MiTienda{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('{{ url_for("static", filename="img/wallpaper.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans text-white">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 w-full p-4 flex justify-between items-center bg-black/50 backdrop-blur z-50">
+        <!-- TITULO / LOGO -->
+        <a href="{{ url_for('productos.listar_productos') }}"
+            class="text-xl font-bold hover:text-purple-300 transition flex items-center space-x-1">
+            <img src="{{ url_for('static', filename='icons/badge-check.svg') }}" alt="Logo" class="w-6 h-6 filter invert">
+            <span>GStoreX</span>
+            <span class="text-purple-300 font-mono">&lt;/&gt;</span>
+        </a>
+
+        <!-- DROPDOWN -->
+        <div class="relative">
+            <button id="btn-menu" class="focus:outline-none">
+                <img src="{{ url_for('static', filename='icons/menu(1).svg') }}" alt="Menu" class="w-6 h-6 filter invert">
+            </button>
+            <div id="menu-general"
+                class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg hidden z-50">
+                <ul class="py-2 text-sm">
+                    <li>
+                        <a href="{{ url_for('productos.listar_productos') }}"
+                            class="flex items-center px-4 py-2 hover:bg-purple-100">
+                            <img src="{{ url_for('static', filename='icons/productos.svg') }}" alt="Productos"
+                                class="w-5 h-5 mr-2">
+                            Productos
+                        </a>
+                    </li>
+
+                    <!-- DASHBOARD según rol / Carrito para cliente -->
+                    {% if current_user.is_authenticated %}
+                    <li>
+                        {% if current_user.rol == 'cliente' %}
+                        <a href="{{ url_for('productos.ver_carrito') }}"
+                            class="flex items-center px-4 py-2 hover:bg-purple-100">
+                            <img src="{{ url_for('static', filename='icons/cart (2).svg') }}" alt="Carrito"
+                                class="w-5 h-5 mr-2">
+                            Carrito
+                        </a>
+                        {% elif current_user.rol == 'vendedor' %}
+                        <a href="{{ url_for('dashboard.vendedor') }}"
+                            class="flex items-center px-4 py-2 hover:bg-purple-100">
+                            <img src="{{ url_for('static', filename='icons/warehouse.svg') }}" alt="Vendedor"
+                                class="w-5 h-5 mr-2">
+                            Dashboard
+                        </a>
+                        {% elif current_user.rol == 'admin' %}
+                        <a href="{{ url_for('dashboard.admin') }}"
+                            class="flex items-center px-4 py-2 hover:bg-purple-100">
+                            <img src="{{ url_for('static', filename='icons/shield-user.svg') }}" alt="Admin"
+                                class="w-5 h-5 mr-2">
+                            Dashboard
+                        </a>
+                        {% endif %}
+                    </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ url_for('productos.perfil') }}"
+                            class="flex items-center px-4 py-2 hover:bg-purple-100">
+                            <img src="{{ url_for('static', filename='icons/users-round.svg') }}" alt="Perfil"
+                                class="w-5 h-5 mr-2">
+                            Perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('auth.logout') }}"
+                            class="flex items-center px-4 py-2 text-red-500 hover:text-red-600 hover:bg-red-100 transition">
+                            <img src="{{ url_for('static', filename='icons/log-out.svg') }}" alt="Logout"
+                                class="w-5 h-5 mr-2 filter invert">
+                            Cerrar sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-24">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 border-t border-gray-800 text-gray-400 text-xs py-6 text-center">
+        <p class="mb-2">© {{ 2025 }} GabrielStore · Build smart, sell smarter</p>
+        <nav class="flex justify-center space-x-4 text-gray-500">
+            <a href="#" class="flex items-center hover:text-purple-400 transition">
+                <img src="{{ url_for('static', filename='icons/circle-dollar-sign.svg') }}" alt="Privacidad"
+                    class="w-4 h-4 mr-1"> Privacidad
+            </a>
+            <a href="#" class="flex items-center hover:text-purple-400 transition">
+                <img src="{{ url_for('static', filename='icons/banknote.svg') }}" alt="Términos"
+                    class="w-4 h-4 mr-1"> Términos
+            </a>
+            <a href="#" class="flex items-center hover:text-purple-400 transition">
+                <img src="{{ url_for('static', filename='icons/square-pen.svg') }}" alt="Contacto"
+                    class="w-4 h-4 mr-1"> Contacto
+            </a>
+        </nav>
+    </footer>
+
+    <!-- SCRIPT MENÚ -->
+    <script>
+        const btnMenu = document.getElementById('btn-menu');
+        const menuGeneral = document.getElementById('menu-general');
+
+        if (btnMenu) {
+            btnMenu.addEventListener('click', () => {
+                menuGeneral.classList.toggle('hidden');
+            });
+
+            window.addEventListener('click', (e) => {
+                if (!btnMenu.contains(e.target) && !menuGeneral.contains(e.target)) {
+                    menuGeneral.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

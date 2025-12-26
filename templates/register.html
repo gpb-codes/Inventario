@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-transparent">
+
+    <!-- Card -->
+    <div class="w-full max-w-md bg-gray-900/90 dark:bg-gray-800/90 
+              backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-gray-700">
+
+        <!-- Título -->
+        <h1
+            class="text-4xl font-extrabold mb-6 text-center text-purple-700 tracking-tight flex items-center justify-center gap-2">
+            <img src="{{ url_for('static', filename='icons/circle-plus.svg') }}" alt="Registrar"
+                class="h-8 w-8 icon-purple">
+            Registrarse
+        </h1>
+
+        <!-- Mensajes -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div
+            class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm shadow-sm flex items-center gap-2">
+            <img src="{{ url_for('static', filename='icons/triangle-alert.svg') }}" alt="Error"
+                class="h-4 w-4 icon-purple">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Formulario -->
+        <form method="POST" class="space-y-5">
+
+            <!-- Nombre -->
+            <div>
+                <label for="nombre" class="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+                    <img src="{{ url_for('static', filename='icons/user.svg') }}" alt="Nombre"
+                        class="h-4 w-4 icon-purple">
+                    Nombre completo
+                </label>
+                <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" required class="w-full border border-gray-300 rounded-lg px-4 py-2
+                      focus:outline-none focus:ring-2 focus:ring-purple-500
+                      focus:border-purple-500 transition duration-200">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+                    <img src="{{ url_for('static', filename='icons/shield-user.svg') }}" alt="Email"
+                        class="h-4 w-4 icon-purple">
+                    Correo electrónico
+                </label>
+                <input type="email" name="email" id="email" placeholder="ejemplo@correo.com" required class="w-full border border-gray-300 rounded-lg px-4 py-2
+                      focus:outline-none focus:ring-2 focus:ring-purple-500
+                      focus:border-purple-500 transition duration-200">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+                    <img src="{{ url_for('static', filename='icons/key.svg') }}" alt="Contraseña"
+                        class="h-4 w-4 icon-purple">
+                    Contraseña
+                </label>
+                <input type="password" name="password" id="password" placeholder="••••••••" required class="w-full border border-gray-300 rounded-lg px-4 py-2
+                      focus:outline-none focus:ring-2 focus:ring-purple-500
+                      focus:border-purple-500 transition duration-200">
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-xl
+                     font-semibold tracking-wide flex items-center justify-center gap-2
+                     hover:bg-purple-700 hover:scale-[1.02]
+                     transform transition duration-200 shadow-lg">
+                <img src="{{ url_for('static', filename='icons/badge-check.svg') }}" alt="Registrar"
+                    class="h-5 w-5 icon-purple">
+                Registrar
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <p class="mt-6 text-center text-gray-600 text-sm flex items-center justify-center gap-2">
+            ¿Ya tienes cuenta?
+            <a href="{{ url_for('auth.login') }}"
+                class="text-purple-600 font-semibold hover:underline flex items-center gap-1">
+                <img src="{{ url_for('static', filename='icons/log-out.svg') }}" alt="Login"
+                    class="h-4 w-4 icon-purple">
+                Inicia sesión
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Clase global para íconos morados con transparencia -->
+<style>
+    .icon-purple {
+        opacity: 0.7;
+        filter: invert(29%) sepia(85%) saturate(746%) hue-rotate(230deg) brightness(95%) contrast(90%);
+    }
+</style>
+{% endblock %}
