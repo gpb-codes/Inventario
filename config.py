@@ -2,7 +2,7 @@ import os
 
 class Config:
     SECRET_KEY = "SECRET_KEY"
-    SQLALCHEMY_DATABASE_URI = "postgresql://usuario:password@localhost/inventario"
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:225366373g@localhost/inventario"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     #minIO Configuration
